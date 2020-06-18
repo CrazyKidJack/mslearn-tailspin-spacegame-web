@@ -9,7 +9,8 @@ resources:
     source: SpacegameBuildPipe
     trigger:
      branches:
-     - '*'
+      include:
+      - '*'
 
 pool:
   vmImage: 'windows-latest'
