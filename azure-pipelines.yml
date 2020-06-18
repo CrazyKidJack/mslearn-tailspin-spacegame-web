@@ -6,7 +6,7 @@
 resources:
   pipelines:
   - pipeline: buildPipe
-    source: mslearn-tailspin-spacegame-web
+    source: SpacegameBuildPipe
     trigger:
      branches:
      - '*'
