@@ -1,0 +1,44 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+resources:
+  pipelines:
+  - pipeline: buildPipe
+    source: mslearn-tailspin-spacegame-web
+    trigger:
+     branches:
+     - '*'
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: FortifySCA@5
+  inputs:
+    fortifyBuildId: spacegame
+    runBuildTranslate: true
+    applicationType: 'dotnet'
+    fortifyProjects: '**\*.sln'
+    runFortifyRulepackUpdate: false
+    runFortifyClean: true
+    scaVerbose: true
+    scaDebug: true
+    runFortifyScan: true
+    fortifyScanType: 'CloudScan'
+    cloudScanfortifyServerName: 'FortifySSC'
+    cloudScanRunFortifyUpload: true
+    cloudScanFortifyApplicationName: 'WebGoat'
+    cloudScanFortifyApplicationVersion: '1.0'
