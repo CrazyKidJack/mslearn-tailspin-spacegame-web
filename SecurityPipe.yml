@@ -13,7 +13,7 @@ resources:
       - '*'
 
 pool:
-  vmImage: 'windows-latest'
+  name: On Premise Windows
 
 variables:
   solution: '**/*.sln'
