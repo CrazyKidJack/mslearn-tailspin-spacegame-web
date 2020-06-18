@@ -79,6 +79,23 @@ steps:
     publishTestResults: true
     projects: '**/*.Tests.csproj'
 
+- task: FortifySCA@5
+  inputs:
+    fortifyBuildId: spacegame
+    runBuildTranslate: true
+    applicationType: 'dotnet'
+    fortifyProjects: '**\*.sln'
+    runFortifyRulepackUpdate: false
+    runFortifyClean: true
+    scaVerbose: true
+    scaDebug: true
+    runFortifyScan: true
+    fortifyScanType: 'CloudScan'
+    cloudScanfortifyServerName: 'FortifySSC'
+    cloudScanRunFortifyUpload: true
+    cloudScanFortifyApplicationName: 'WebGoat'
+    cloudScanFortifyApplicationVersion: '1.0'
+
 - script: |
     reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
   displayName: 'Create code coverage report'
